@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/RITChallenge/user.css"></link>
+
+</head>
+<body>
+	<h1>Intuit Coding challenge</h1>
+	<div class="container">
+		<button id="run" class="btn-success has-spinner pull-right">
+			<span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+			Execute
+		</button>
+		<span id="wait"> Loading.....</span>
+	</div>
+	<br/>
+	<div class="container">
+		<table class="table table-striped">
+			<tr>
+				<th>User ID</th>
+				<th>Music</th>
+				<th>Movies</th>
+				<th>Arts</th>
+				<th>Reading</th>
+				<th>Traveling</th>
+				<th>Food</th>
+				<th>Outgoing</th>
+				<th>Gaming</th>
+				<th>Sports</th>
+				<th>HasPet</th>
+				<th>Punctual</th>
+			</tr>
+		</table>
+	</div>
+	<script>
+	
+$("#wait").hide();
+$(document).on("click", "#run", function() {  // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
+
+	 $("#run").addClass("active");
+	 $("#wait").show();
+	
+	 $.ajax({
+		 type: "GET",
+         dataType: "json",
+         url: "http://localhost:8080/RITChallenge/users/process/",
+		  success: function(data){
+			  processData(data);
+			  $("#run").removeClass("active");
+			  $("#wait").hide();
+		  },
+		  error:function(){
+		      alert("failure");
+		      $("#result").html('there is error while submit');
+		  }   
+		}); 
+		
+		
+	function processData(json){
+	    $(document).ready(function () {
+	        var tr;
+	        for (var i = 0; i < json.length; i++) {
+	            tr = $('<tr/>');
+	            tr.append("<td>" + json[i].stringId + "</td>");
+	            tr.append("<td>" + json[i].music + "</td>");
+	            tr.append("<td>" + json[i].movies + "</td>");
+	            tr.append("<td>" + json[i].arts + "</td>");
+	            tr.append("<td>" + json[i].reading + "</td>");
+	            tr.append("<td>" + json[i].traveling + "</td>");
+	            tr.append("<td>" + json[i].food + "</td>");
+	            tr.append("<td>" + json[i].outgoing + "</td>");
+	            tr.append("<td>" + json[i].gaming + "</td>");
+	            tr.append("<td>" + json[i].sports + "</td>");
+	            tr.append("<td>" + json[i].hasPet + "</td>");
+	            tr.append("<td>" + json[i].punctual + "</td>");
+	            
+	            $('table').append(tr);
+	        }
+	    });
+	}	
+});
+
+
+</script>
+
+
+</body>
+</html>

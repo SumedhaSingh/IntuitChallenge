@@ -1,3 +1,5 @@
+package com.intuitChallenege.user;
+
 import java.util.HashMap;
 
 public class UserInfo {
